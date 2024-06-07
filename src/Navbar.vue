@@ -1,11 +1,10 @@
-export default function Header() {
-    return (
-        <header>
+<template>
+    <header>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div className="container">
                 <a className="navbar-brand" href="/">
                 <i className="fa fa-bugs"></i>
-                    &nbsp;&nbsp;Bug Clicker
+                    &nbsp;Bug Clicker
                 </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -22,6 +21,21 @@ export default function Header() {
                 </div>
             </div>
         </nav>
-        </header>
-    );
+    </header>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+    }
+  }
 }
+</script>
+
+<style scoped>
+.greeting {
+  font-size: 2em;
+  text-align: center;
+}
+</style>
