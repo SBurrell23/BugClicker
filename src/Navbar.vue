@@ -14,9 +14,9 @@
                         <li className="nav-item">
                             <a className="nav-link" href="/">Buy Merch</a>
                         </li>
-                        {/* <li className="nav-item ">
+                        <li className="nav-item ">
                             <a className="nav-link" href="/">Bugs!</a>
-                        </li> */}
+                        </li> 
                     </ul>
                 </div>
             </div>

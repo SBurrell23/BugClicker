@@ -1,19 +1,21 @@
 <template>
-    <div>
-        <h2>Upgrades</h2>
+    <div class="mt-2">
+        <h4>Upgrades</h4>
         <hr>
-        <div class="card upgradeCard p-2 mb-2">
-        Basic Bug Buying Bot -
-        Buys 1 bugs/second.
-      </div> 
-      <div class="card upgradeCard p-2 mb-2">
-          High Quality Insects - 
-          Bugs sell for 25% more.
-      </div>
-      <div class="card upgradeCard p-2 mb-2">
-        Slightly Larger Feed Bag - 
-        100 total food slots.
-      </div>
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="card mb-2">
+                    <div class="card-header">
+                        Basic Bug Buying Bot
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Buying</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -25,13 +27,39 @@ export default {
     },
     data() {
         return {
-
+            interval: null,
+            items: {
+                "autoBugBuyer":{
+                    level: 1,
+                    bps: 1,
+                    cost: 100,
+                    costType: "money",
+                    owned: false
+                }
+            }
         }
     },
     methods: {
-    }
+        buyUpgrade(item) {
+            if(item == "autoBugBuyer"){
+                this.items.autoBugBuyer.owned = true;
+            }
+        },
+    },
+    onMounted() {
+
+        this.intervalsetInterval(() => {
+            if(this.items.autoBugBuyer.owned){
+                
+            }
+        }, 1000);
+    },
+    onBeforeUnmount() {
+        //clear the interval when the component is unmounted
+        clearInterval(this.interval);
+    },
+
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

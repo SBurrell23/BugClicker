@@ -1,26 +1,25 @@
 <template>
   <div class="container" style="margin-top:80px;">
     <div class="row">
-      <div class="col-6">
-        <Bug/>
+      <div class="col-7">
+        <Bug ref="bug"/>
       </div>
-      <div class="col-6">
-        <Upgrades/>
+      <div class="col-5">
+        <Shop @buy="boughtUpgrade"/>
       </div>
     </div>
-        
-    
   </div>
 </template>
 
 <script>
 import Bug from './components/Bug.vue';
-import Upgrades from './components/Upgrades.vue';
+import Shop from './components/Shop.vue';
+
 
 export default {
   components: {
     Bug,
-    Upgrades
+    Shop
   },
   props: {
   },
@@ -30,6 +29,9 @@ export default {
     }
   },
   methods: {
+    boughtUpgrade(id){
+      this.$refs.bug.buyUpgrade(id);
+    }
   }
 }
 </script>
