@@ -1,10 +1,10 @@
 <template>
   <div class="container" style="margin-top:80px;">
     <div class="row">
-      <div class="col-7">
+      <div class="col-8">
         <Bug ref="bug"/>
       </div>
-      <div class="col-5">
+      <div class="col-4">
         <Shop @buy="boughtUpgrade"/>
       </div>
     </div>
