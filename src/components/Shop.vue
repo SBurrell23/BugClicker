@@ -47,7 +47,7 @@ export default {
                     id: "autoFoodBuyer",
                     bought: false,
                     cost: 100,
-                    description: "Purchases food every second (configurable)"
+                    description: "Fills food bag every second (configurable)"
                 },
                 {
                     name: "High Quality Insects",
