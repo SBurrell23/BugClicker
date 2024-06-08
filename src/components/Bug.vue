@@ -36,8 +36,8 @@
                         Basic Bug Buying Bot
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Buying {{bps}} bugs per second</p>
-                        <button class="btn btn-primary btn-sm" @click="bps += 1">Upgrade</button>
+                        <p class="card-text">Collecting <b>{{bps}}</b> bugs/second</p>
+                        <button class="btn btn-primary btn-sm" @click="bps += 1">Upgrade $100</button>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         Super Secure Specimen Seller
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Selling {{sps}} bugs per second</p>
+                        <p class="card-text">Selling <b>{{sps}}</b> bugs/second</p>
                         <button class="btn btn-primary btn-sm me-2" @click="sps += 1">+1</button>
                         <button class="btn btn-primary btn-sm" @click=" sps > 0 && sps--">-1</button>
                     </div>
@@ -58,7 +58,7 @@
             <div class="col-sm-4">
                 <div class="card mb-2">
                     <div class="card-header">
-                        Fully Functional Food Fetcher
+                        Fully Functional Food Filler
                     </div>
                     <div class="card-body">
                         <p class="card-text">Filling bag every {{fps}} seconds</p>

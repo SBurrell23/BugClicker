@@ -29,7 +29,7 @@ export default {
         return {
             upgrades: [
                 {
-                    name: "Basic Bug Buying Bot",
+                    name: "Basic Bug Collecting Bot", 
                     id: "autoBugBuyer",
                     bought: false,
                     cost: 100,
@@ -43,7 +43,7 @@ export default {
                     description: "Sells bugs every second (configurable)"
                 },
                 {
-                    name: "Fully Functional Food Fetcher",
+                    name: "Fully Functional Food Filler",
                     id: "autoFoodBuyer",
                     bought: false,
                     cost: 100,
