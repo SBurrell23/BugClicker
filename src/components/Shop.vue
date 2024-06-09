@@ -2,20 +2,28 @@
     <div>
         <h4>Shop</h4>
         <hr>
-        <div class="card mb-2" v-for="(upgrade,i) in upgrades" :key="i">
-            <div class="card-header">
-                {{ upgrade.name }}
-                <span class="trBtn">
-                    <a class="btn btn-secondary btn-sm" @click="buy(upgrade.id)">
-                        Buy ${{ upgrade.cost }}
-                    </a>
-                </span>
+        <span v-for="(upgrade,index) in upgrades" :key="index">
+            <div class="card mb-2" v-if="reachedShowAt(upgrade) && !upgrade.bought">
+                <div class="card-header">
+                    {{ upgrade.name }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ upgrade.description }}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-success btn-sm" :disabled="money< upgrade.cost || bugs < upgrade.unlock" v-if="!upgrade.bought" @click="buy(upgrade)">
+                                Buy ${{ upgrade.cost }}
+                            </button>
+                        </div>
+                        <div class="col-md-6" style="text-align:right;" v-if="!reachedUnlock(upgrade) || upgrade.unlock != -1">
+                            <p class="card-text text-danger">
+                                <i className="fa fa-lock"></i> Unlocks at {{upgrade.unlock}} bugs
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="card-text">{{ upgrade.description }}</p>
-                
-            </div>
-        </div>
+        </span>
     </div>
 </template>
 
@@ -24,6 +32,14 @@ export default {
     components: {
     },
     props: {
+        money: {
+            type: Number,
+            required: true
+        },
+        bugs: {
+            type: Number,
+            required: true
+        }
     },
     data() {
         return {
@@ -32,45 +48,77 @@ export default {
                     name: "Basic Bug Collecting Bot", 
                     id: "autoBugBuyer",
                     bought: false,
-                    cost: 100,
-                    description: "Buys 1 bug every second (upgradeable)"
+                    cost: 10,
+                    showAt:10,
+                    unlock: 25,
+                    description: "Buys 1 bug every second"
                 },
                 {
-                    name: "Super Secure Specimen Seller",
+                    name: "Super Specimen Seller",
                     id: "autoBugSeller",
                     bought: false,
                     cost: 100,
+                    showAt:25,
+                    unlock: 150, 
                     description: "Sells bugs every second (configurable)"
-                },
-                {
-                    name: "Fully Functional Food Filler",
-                    id: "autoFoodBuyer",
-                    bought: false,
-                    cost: 100,
-                    description: "Fills food bag every second (configurable)"
-                },
-                {
-                    name: "High Quality Insects",
-                    bought: false,
-                    description: "Bugs sell for 25% more"
                 },
                 {
                     name: "Slightly Larger Feed Bag",
                     bought: false,
-                    description: "100 total food slots"
+                    cost: 25,
+                    showAt:35,
+                    unlock: 50,
+                    description: "50 total food slots"
+                },
+                {
+                    name: "Fully Functional Food Filler",
+                    id: "autoFoodFiller",
+                    bought: false,
+                    cost: 100,
+                    showAt:150,
+                    unlock: 300,
+                    description: "Fills food bag every 3 seconds"
+                },
+                {
+                    name: "High Quality Insects",
+                    bought: false,
+                    cost:25,
+                    showAt:50,
+                    unlock: 100,
+                    description: "Bugs sell for 25% more"
                 },
                 {
                     name: "Ohh a shiny one!",
                     bought: false,
+                    cost:200,
+                    showAt:100,
+                    unlock: 200, 
                     description: "Every 10th bug sold sells for 5x"
                 }
             ]
 
         }
     },
-    methods: {
-        buy(id) {
-            this.$emit('buy',id);
+    methods: { 
+        buy(upgrade) {
+            upgrade.bought = true;
+            this.$emit('buy', upgrade);
+        },
+        reachedShowAt(upgrade) {
+            if(this.bugs >= upgrade.showAt){
+                upgrade.showAt = -1;
+            }
+            if(upgrade.showAt == -1)
+                return true;
+            return false;
+        },
+        reachedUnlock(upgrade) {
+            if(this.bugs >= upgrade.unlock){
+                upgrade.unlock = -1;
+            }
+            if(upgrade.unlock == -1)
+                return true;
+            return false;
         }
     }
 }
