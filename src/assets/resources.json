@@ -1,0 +1,16 @@
+{
+    "bugs":{
+        "name": "Bugs",
+        "value": 0,
+        "rate": 0,
+        "accumulator": 0,
+        "unlocked": true
+    },
+    "dirt":{
+        "name": "Dirt",
+        "value": 0,
+        "rate": 0,
+        "accumulator": 0,
+        "unlocked": false
+    }
+}

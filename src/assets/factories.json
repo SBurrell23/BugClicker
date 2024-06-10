@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Worker Ants",
+        "level" : 0,
+        "rate" : 0,
+        "rateIncrement": 1,
+        "produces": "bugs",
+        "costType": "bugs",
+        "cost": 10,
+        "costIncrement": 5,
+        "buyText": "Recruit Workers",
+        "unlockAt": [0,"bugs"],
+        "unlocked": true
+    },
+    {
+        "name": "Builder Ants",
+        "level" : 0,
+        "rate" : 0,
+        "rateIncrement": 0.5,
+        "produces": "dirt",
+        "costType": "bugs",
+        "cost": 20,
+        "costIncrement": 10,
+        "buyText": "Hire Builders",
+        "unlockAt": [0,"bugs"],
+        "unlocked": true
+    }
+]
