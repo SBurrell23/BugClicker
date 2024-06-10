@@ -1,81 +1,37 @@
 <template>
     <div class="row">
-        <div class="col-8">
+        <div class="col-sm-2" style="text-align: center;">
+            <div class="mb-2 text-success"><h1>Bugs </h1></div>
+            <div class="mb-3"><h1> {{resource.bugs.value}} </h1></div>
+            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',1)">Collect Bug</button>
+        </div>
+        <div class="col-sm-8">
             <div class="unselectable">
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <div style="margin-left:auto; margin-right:auto;" class="centerText">
-                            <h1 style="color:#122c12">Bugs: {{bugs}}</h1>
-                            <button class="btn btn-primary mt-2" :disabled="food<bugFoodCost"  @click="collectBug(1)">
-                                Collect Bug ({{bugFoodCost}} food)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 centerText">
-                        <h4 class="mt-4">Money: ${{ (money / 100).toFixed(2) }}</h4>
-                        <button class="btn btn-danger me-2 mb-5" :disabled="bugs<1" @click="sellBug(1)">
-                            Sell Bug ${{ (bugSalePrice / 100).toFixed(2) }}
-                        </button>
-                    </div>
-                    <div class="col-6 centerText">
-                        <h4 class="mb-2 mt-4">Food: {{food}} / {{foodBag}}</h4>
-                        <button class="btn btn-success" :disabled="money < foodCost * (foodBag - food) || foodBag == food" @click="fillFoodBag()">
-                            Fill Food Bag ${{ (foodCost * (foodBag - food) / 100).toFixed(2) }}
-                        </button> 
-                    </div>
-                </div>
-
+                
                 <div class="mt-2">
-                <h4>Upgrades</h4>
-                <hr>
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col-sm-4" v-if="items.includes('autoBugBuyer')">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                Basic Beetle Buyer Bot
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Collecting <b>{{bps}}</b> bugs/second</p>
-                                <button class="btn btn-primary btn-sm" @click="bps += 1">Upgrade $100</button>
+                        <div class="col-sm-4" v-for="(factory,index) in factories" :key="index" v-show="factory.unlocked">
+                            <div class="card mb-2">
+                                <div class="card-header">
+                                    <b>{{factory.level}}</b> - {{factory.name}}
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Collecting <b>{{factory.rate}}</b> {{factory.produces}}/second</p>
+                                    <button class="btn btn-primary btn-sm" @click="upgradeFactory(index)" :disabled="resource[factory.costType].value < factory.cost">
+                                        {{ factory.buyText }} &nbsp;<i>({{factory.cost}} {{factory.costType}})</i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-4" v-if="items.includes('autoBugSeller')">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                Super Secure Specimen Seller
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Selling <b>{{sps}}</b> bugs/second</p>
-                                <button class="btn btn-primary btn-sm me-2" @click="sps += 1">+1</button>
-                                <button class="btn btn-primary btn-sm" @click=" sps > 0 && sps--">-1</button>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="col-sm-4" v-if="items.includes('autoFoodFiller')">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                Fully Functional Food Filler
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Filling bag every {{fps}} seconds</p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
-            </div>
 
             </div>
         </div>
-        <div class="col-4">
-            <Shop ref="shop" :money="money/100" :bugs="bugs" @buy="buyUpgrade"/>
+        <div class="col-sm-2">
+            <!-- <Shop ref="shop" :money="money/100" :bugs="bugs" @buy="buyUpgrade"/> -->
         </div>
     </div>
 </template>
@@ -91,98 +47,84 @@ export default {
     data() {
         return {
             interval: null,
-            elapsed: 0,
+            startTime: 0,
             second: 0,
-            bugs: 0,
-            bugFoodCost: 1,
-            //-----------------//
-            money: 0,  // cents
-            bugSalePrice: 150,  // cents 
-            //-----------------//
-            food: 10,
-            foodBag: 15,
-            foodCost: 100,  // cents
-            //-----------------//
-            bps: 0,  // bugs per second
-            sps: 0,  // sell bugs per second
-            fps: 0,  // fill food bag per second
-            //-----------------//
-            bugAccumulator: 0,
-            sellAccumulator: 0,
+            resource:{
+                bugs:{
+                    name: "Bugs",
+                    value: 0,
+                    rate: 0,
+                    accumulator: 0
+                }
+            },
+            factories:[
+                {
+                    name: "Worker Ants",
+                    level : 0,
+                    rate : 0,
+                    rateIncrement: 1,
+                    produces: "bugs",
+                    costType: "bugs",
+                    cost: 10,
+                    costIncrement: 5,
+                    buyText: "Recruit Workers",
+                    unlockAt: [0,"bugs"],
+                    unlocked: true
+                },
+                {
+                    name: "Builder Ants",
+                    level : 0,
+                    rate : 0,
+                    rateIncrement: 1,
+                    produces: "bugs",
+                    costType: "bugs",
+                    cost: 50,
+                    costIncrement: 5,
+                    buyText: "Hire Builders",
+                    unlockAt: [0,"bugs"],
+                    unlocked: true
+                }
+            ],
             items:[]
         };
     },
     methods: {
-        collectBug(num) {
-            if (this.food >= this.bugFoodCost * num) {
-                this.bugs += num;
-                this.food -= this.bugFoodCost * num;
-            }
+        collectResource(type,num) {
+            this.resource[type].value += num;
         },
-        sellBug(num) {
-            if (this.bugs >= num) {
-                this.bugs -= num;
-                this.money += this.bugSalePrice * num;
-            }
+        upgradeFactory(index) {
+            var factory = this.factories[index];
+            this.resource[factory.costType].value -= factory.cost; //Pay the cost
+            this.resource[factory.produces].rate += factory.rateIncrement; //Increase the resource rate
+            factory.level += 1;
+            factory.rate += factory.rateIncrement;
+            factory.cost += factory.costIncrement;
         },
-        fillFoodBag() {
-            const foodSpotsInBag = this.foodBag - this.food;
-            if (this.money >= this.foodCost * foodSpotsInBag) {
-                this.money -= this.foodCost * foodSpotsInBag; 
-                this.food += foodSpotsInBag;
-            }
-        },
-        buyUpgrade(upgrade) {
-            this.money -= upgrade.cost*100;
-            if (upgrade.id == "autoBugBuyer"){
-                this.items.push(upgrade.id);
-                this.bps += 1;
-            }
-            else if (upgrade.id == "autoBugSeller"){
-                this.items.push(upgrade.id);
-                this.bps += 1;
-            }
-            else if (upgrade.id == "autoFoodFiller"){
-                this.items.push(upgrade.id);
-                this.fps += 1;
-            }
-            
+        updatePageTitle() {
+            document.title = "Bug Clicker - " + this.resource.bugs.value.toFixed(0);
+            this.second = 0;
         }
     },
-    created() {
+    mounted() {
+        this.startTime = new Date().getTime();
+
         this.interval = setInterval(() => {
-            this.elapsed += 100;
             this.second += 100;
-            this.bugAccumulator += this.bps / 10;
-            this.sellAccumulator += this.sps / 10;
+            this.resource.bugs.accumulator += this.resource.bugs.rate / 10;
 
             // Collect bugs (whole bugs)
-            if (this.bugAccumulator >= 1) {
-                const wholeBugs = Math.floor(this.bugAccumulator);
-                this.collectBug(wholeBugs);
-                this.bugAccumulator -= wholeBugs;
+            if (this.resource.bugs.accumulator >= 1) {
+                const wholeBugs = Math.floor(this.resource.bugs.accumulator);
+                this.collectResource("bugs", wholeBugs);
+                this.resource.bugs.accumulator -= wholeBugs;
             }
 
-            // Sell bugs (whole pennies only)
-            if (this.sellAccumulator >= 1) {
-                const wholeSales = Math.floor(this.sellAccumulator);
-                this.sellBug(wholeSales);
-                this.sellAccumulator -= wholeSales;
-            }
-
-            // Fill food bag every second
-            if (this.elapsed >= this.fps*1000  && this.fps != 0) {
-                this.fillFoodBag();
-                this.elapsed = 0; // reset every second
-            }
-            if(this.second >= 1000){
-                document.title = "Bug Clicker - " + this.bugs.toFixed(0);
-                this.second = 0;
-            }
+            if(this.second >= 1000)
+                this.updatePageTitle();
             
         }, 100);
     },
-    destroyed() {
+    unmount() {
         clearInterval(this.interval);
     }
 };
