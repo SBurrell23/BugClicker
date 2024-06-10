@@ -1,31 +1,39 @@
 <template>
     <div class="row" v-if="resources.bugs">
         <div class="col-sm-2" style="text-align: center;">
-            <div class="mb-2 text-success"><h1>Bugs </h1></div>
-            <div class="mb-3"><h1> {{resources.bugs.value}} </h1></div>
+
+            <div class="mb-2"><h1>Bugs </h1></div>
+            <div class="mb-3"><h1 :style="'color:'+resources.bugs.color"> {{resources.bugs.value}} </h1></div>
             <button class="btn btn-primary btn-sm" @click="collectResource('bugs',5)">Collect Bug</button>
-            <h3 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources</h3>
+            
+            <h4 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
             <ul class="list-group mb-4">
-                <li class="list-group-item" v-for="(res,index) in filteredResources" :key="index">
-                    {{res.name}} : {{res.value}}
+                <li class="list-group-item" v-for="(resource,index) in filteredResources" :key="index">
+                    <span :style="'color:'+resource.color">
+                        <b>{{resource.name}} - {{resource.value}}</b>
+                    </span>
                 </li>
             </ul>
+
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8"> 
             <div class="unselectable">
-                
+                <h4>Collections</h4>
+                <hr>
                 <div class="mt-2">
                     <div class="row">
 
-                        <div class="col-sm-4" v-for="(factory,index) in factories" :key="index" v-show="factory.unlocked">
+                        <div class="col-sm-4 mb-2" v-for="(factory,index) in factories" :key="index" v-show="factory.unlocked">
                             <div class="card mb-2">
                                 <div class="card-header">
                                     <b>{{factory.level}}</b> - {{factory.name}}
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">Collecting <b>{{factory.rate}}</b> {{factory.produces}}/second</p>
+                                    <p class="card-text">
+                                        {{resources[factory.produces].workText}} <b>{{factory.rate}}</b> <span :style="'color:'+resources[factory.produces].color"><b>{{producesName(factory.produces)}}</b></span> /s
+                                    </p>
                                     <button class="btn btn-primary btn-sm" @click="upgradeFactory(index)" :disabled="resources[factory.costType].value < factory.cost">
-                                        {{ factory.buyText }} &nbsp;<i>({{factory.cost}} {{factory.costType}})</i>
+                                        {{ factory.buyText }} &nbsp;<i>({{factory.cost}} {{producesName(factory.costType)}})</i>
                                     </button>
                                 </div>
                             </div>
@@ -80,10 +88,16 @@ export default {
             this.resources[factory.costType].value -= factory.cost; //Pay the cost
             this.resources[factory.produces].rate += factory.rateIncrement; //Increase the resource rate
             factory.level += 1;
-            factory.rate += factory.rateIncrement;
+            factory.rate =  this.roundToTwoDecimals(factory.rate + factory.rateIncrement);
             factory.cost += factory.costIncrement;
             if(this.resources[factory.produces].unlocked == false) //If this is the first factory to producee this resource, unlock it
                 this.resources[factory.produces].unlocked = true;
+        },
+        producesName(produces){
+            return this.resources[produces].name;
+        },
+        roundToTwoDecimals(num) {
+            return Math.round(num * 100) / 100;
         },
         updatePageTitle() {
             if(this.second >= 1000){

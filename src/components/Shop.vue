@@ -3,22 +3,15 @@
         <h4>Shop</h4>
         <hr>
         <span v-for="(upgrade,index) in upgrades" :key="index">
-            <div class="card mb-2" v-if="reachedShowAt(upgrade) && !upgrade.bought">
-                <div class="card-header">
-                    {{ upgrade.name }}
-                </div>
+            <div class="card mb-2">
                 <div class="card-body" >
+                    <h5 class="card-title"> {{ upgrade.name }}</h5>
                     <p class="card-text">{{ upgrade.description }}</p>
                     <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-success btn-sm" :disabled="money< upgrade.cost || bugs < upgrade.unlock" v-if="!upgrade.bought" @click="buy(upgrade)">
-                                Buy ${{ upgrade.cost }}
+                        <div class="col-md-12">
+                            <button class="btn btn-success btn-sm" style="float:right" :disabled="money< upgrade.cost || bugs < upgrade.unlock" v-if="!upgrade.bought" @click="buy(upgrade)">
+                                <i className="fa fa-shopping-cart"></i> {{ upgrade.cost }} {{ upgrade.costType }}
                             </button>
-                        </div>
-                        <div class="col-md-6" style="text-align:right;" v-if="!reachedUnlock(upgrade) || upgrade.unlock != -1">
-                            <p class="card-text text-danger">
-                                <i className="fa fa-lock"></i> Unlocks at {{upgrade.unlock}} bugs
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -45,55 +38,24 @@ export default {
         return {
             upgrades: [
                 {
-                    name: "Basic Beetle Buyer Bot",  
-                    id: "autoBugBuyer",
+                    name: "Good Workers",  
+                    id: "goodWorkers",
                     bought: false,
                     cost: 10,
+                    costType: "bugs",
                     showAt:10,
                     unlock: 25,
-                    description: "Buys 1 bug every second"
+                    description: "Worker Ants collect bugs 25% faster"
                 },
                 {
-                    name: "Super Specimen Seller",
-                    id: "autoBugSeller",
+                    name: "Birthing Hips",
+                    id: "birthingHips",
                     bought: false,
-                    cost: 50,
+                    cost: 1000,
+                    costType: "eggs",
                     showAt:40,
                     unlock: 100, 
-                    description: "Sells bugs every second (configurable)"
-                },
-                {
-                    name: "Slightly Larger Feed Bag",
-                    bought: false,
-                    cost: 25,
-                    showAt:35,
-                    unlock: 50,
-                    description: "50 total food slots"
-                },
-                {
-                    name: "Fully Functional Food Filler",
-                    id: "autoFoodFiller",
-                    bought: false,
-                    cost: 50,
-                    showAt:100,
-                    unlock: 200,
-                    description: "Fills food bag every 3 seconds"
-                },
-                {
-                    name: "High Quality Insects",
-                    bought: false,
-                    cost:25,
-                    showAt:50,
-                    unlock: 100,
-                    description: "Bugs sell for 25% more"
-                },
-                {
-                    name: "Ohh a shiny one!",
-                    bought: false,
-                    cost:200,
-                    showAt:100,
-                    unlock: 200, 
-                    description: "Every 10th bug sold sells for 5x"
+                    description: "Queen Termites egg production is doubled."
                 }
             ]
 

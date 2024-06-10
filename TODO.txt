@@ -1,0 +1,19 @@
+Make factories able to PRODUCE multiple resource e.g. turn these into arrays:
+"rate" : 0,
+"rateIncrement": 1,
+"produces": "bugs"
+
+Make factories able to COST multiple resources e.g. turn these into arrays:
+"cost": 10,
+"costIncrement": 5,
+"costType": "bugs",
+
+Add unlock function loop that unlocks factories at their appropriate time
+
+get shop working so that you can spend resource to buy 1 time upgrades
+upgrades will modify the way a factory works and permenantly effect its stats
+
+adjust shop to refactor upgrades into their own .json File 
+
+save factories and resource to local storage and check and load on startup to save progress
+

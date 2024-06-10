@@ -4,13 +4,35 @@
         "value": 0,
         "rate": 0,
         "accumulator": 0,
-        "unlocked": true
+        "unlocked": true,
+        "color": "#369114",
+        "workText": "Collecting"
     },
     "dirt":{
         "name": "Dirt",
         "value": 0,
         "rate": 0,
         "accumulator": 0,
-        "unlocked": false
+        "unlocked": false,
+        "color": "#7a5218",
+        "workText": "Gathering"
+    },
+    "queenTermite":{
+        "name": "Queen Termites",
+        "value": 0,
+        "rate": 0,
+        "accumulator": 0,
+        "unlocked": false,
+        "color": "#d98510",
+        "workText": "Birthing"
+    },
+    "eggs":{
+        "name": "Eggs",
+        "value": 0,
+        "rate": 0,
+        "accumulator": 0,
+        "unlocked": false,
+        "color": "#d5b775",
+        "workText": "Laying"
     }
 }
