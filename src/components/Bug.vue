@@ -35,7 +35,7 @@
                     <div class="col-sm-4" v-if="items.includes('autoBugBuyer')">
                         <div class="card mb-2">
                             <div class="card-header">
-                                Basic Bug Buying Bot
+                                Basic Beetle Buyer Bot
                             </div>
                             <div class="card-body">
                                 <p class="card-text">Collecting <b>{{bps}}</b> bugs/second</p>

@@ -7,7 +7,7 @@
                 <div class="card-header">
                     {{ upgrade.name }}
                 </div>
-                <div class="card-body">
+                <div class="card-body" >
                     <p class="card-text">{{ upgrade.description }}</p>
                     <div class="row">
                         <div class="col-md-6">
@@ -45,7 +45,7 @@ export default {
         return {
             upgrades: [
                 {
-                    name: "Basic Bug Collecting Bot", 
+                    name: "Basic Beetle Buyer Bot",  
                     id: "autoBugBuyer",
                     bought: false,
                     cost: 10,
@@ -57,9 +57,9 @@ export default {
                     name: "Super Specimen Seller",
                     id: "autoBugSeller",
                     bought: false,
-                    cost: 100,
-                    showAt:25,
-                    unlock: 150, 
+                    cost: 50,
+                    showAt:40,
+                    unlock: 100, 
                     description: "Sells bugs every second (configurable)"
                 },
                 {
@@ -74,9 +74,9 @@ export default {
                     name: "Fully Functional Food Filler",
                     id: "autoFoodFiller",
                     bought: false,
-                    cost: 100,
-                    showAt:150,
-                    unlock: 300,
+                    cost: 50,
+                    showAt:100,
+                    unlock: 200,
                     description: "Fills food bag every 3 seconds"
                 },
                 {
