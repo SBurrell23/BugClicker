@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Good Workers",
+        "bought": false,
+        "shown": false,
+        "cost": [10,"bugs"],
+        "unlockAt": [25,"bugs"],
+        "executes" : [{
+            "funcName": "increaseProduction",
+            "args": ["bugs", 100 , "Worker Ants"]
+        }],
+        "description": "Worker Ants collect bugs 100% faster"
+    },
+    {
+        "name": "Great Workers",
+        "bought": false,
+        "shown": false,
+        "cost": [10,"bugs"],
+        "unlockAt": [25,"bugs"],
+        "executes" : [{
+            "funcName": "increaseProduction",
+            "args": ["bugs", 100 , "Worker Ants"]
+        }],
+        "description": "Worker Ants collection rate is doubled."
+    },
+    {
+        "name": "Birthing Hips",
+        "bought": false,
+        "shown": false,
+        "cost": [1000,"eggs"],
+        "unlockAt": [3,"queenTermites"],
+        "executes" : [{
+            "funcName": "increaseProduction",
+            "args": ["eggs", 100, "Queen Termite Nest"]
+        }],
+        "description": "Queen Termites egg production is doubled"
+    }
+]

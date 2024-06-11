@@ -4,7 +4,7 @@
 
             <div class="mb-2"><h1>Bugs </h1></div>
             <div class="mb-3"><h1 :style="'color:'+resources.bugs.color"> {{resources.bugs.value}} </h1></div>
-            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',1000000000)">Collect Bug</button>
+            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',10000000)">Collect Bug</button>
             
             <h4 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
             <ul class="list-group mb-4">
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-lg-2">
-            <Shop ref="shop" :money="money/100" :bugs="bugs" @buy="buyUpgrade"/>
+            <Shop ref="shop" :upgrades="upgrades"/>
         </div>
     </div>
 </template>
@@ -58,6 +58,7 @@
 <script>
 import resources from '../assets/resources.json';
 import factories from '../assets/factories.json';
+import upgrades from '../assets/upgrades.json';
 import Shop from './Shop.vue';
 
 export default {
@@ -81,7 +82,7 @@ export default {
             second: 0,
             resources:{},
             factories:[],
-            items:[],
+            upgrades:[],
             geometricProgression: 1.15
         };
     },
@@ -179,6 +180,7 @@ export default {
     mounted() {
         this.resources = resources;
         this.factories = factories;
+        this.upgrades = upgrades;
 
         this.setupResources();
 

@@ -23,7 +23,7 @@
         "production": [
             {
                 "type": "dirt",
-                "increment": 2
+                "increment": 2000000
             }
         ],
         "costs": [
@@ -40,7 +40,7 @@
         "level": 0,
         "production": [
             {
-                "type": "queenTermite",
+                "type": "queenTermites",
                 "increment": 0.01
             }
         ],
@@ -68,7 +68,7 @@
         ],
         "costs": [
             {
-                "type": "queenTermite",
+                "type": "queenTermites",
                 "startingCost": 1
             },
             {
@@ -77,6 +77,6 @@
             }
         ],
         "buyText": "Build Nest",
-        "unlockAt": [0.01,"queenTermite"]
+        "unlockAt": [0.01,"queenTermites"]
     }
 ]
