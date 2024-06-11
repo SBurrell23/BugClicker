@@ -15,7 +15,7 @@
         "name": "Great Workers",
         "bought": false,
         "shown": false,
-        "cost": [10,"bugs"],
+        "cost": [10,"bugs", 100,"dirt"],
         "unlockAt": [25,"bugs"],
         "executes" : [{
             "funcName": "increaseProduction",

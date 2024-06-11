@@ -38,7 +38,7 @@
                                         <span :style="'color:'+resources[product.type].color"><b>&nbsp;{{producesName(product.type)}}</b></span> /s
                                     </p>
                                     <button class="btn btn-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
-                                        {{ factory.buyText }} &nbsp;<i>({{ showCosts(factory.costs) }})</i>
+                                        {{ factory.buyText }} &nbsp;<i> - {{ showCosts(factory.costs) }}</i>
                                     </button>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ export default {
             resources:{},
             factories:[],
             upgrades:[],
-            geometricProgression: 1.15
+            defaultGeometricProgression: 1.15
         };
     },
     methods: {
@@ -99,7 +99,8 @@ export default {
                 if(!cost.currentCost) //currentCost is not set until a factory is lvl 1
                     cost.currentCost = cost.startingCost;
                 this.resources[cost.type].value -= cost.currentCost;
-                cost.currentCost = Math.ceil(cost.startingCost * Math.pow(this.geometricProgression, factory.level));
+                var gp = !cost.geometricProgression ? this.defaultGeometricProgression : cost.geometricProgression;
+                cost.currentCost = Math.round(cost.startingCost * Math.pow(gp, factory.level));
             });
 
             // Update production rates and increment rates
@@ -145,10 +146,7 @@ export default {
             return Math.round(num * 100) / 100;
         },
         updatePageTitle() {
-            if(this.second >= 1000){
-                document.title = "Bug Clicker - " + this.resources.bugs.value.toFixed(0);
-                this.second = 0;
-            }
+            document.title = "Bug Clicker - " + this.resources.bugs.value.toFixed(0);
         },
         collectResources(){
             for (const key in this.resources) {
@@ -188,9 +186,15 @@ export default {
 
         this.interval = setInterval(() => {
             this.second += 100; //Used to track seconds
+
             this.collectResources();
-            this.checkForUnlocks();
-            this.updatePageTitle();
+
+            if(this.second >= 1000){
+                this.checkForUnlocks();
+                this.updatePageTitle();
+                this.second = 0;
+            }
+
         }, 100);
 
     },

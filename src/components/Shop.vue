@@ -9,8 +9,8 @@
                     <p class="card-text">{{ upgrade.description }}</p>
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" style="float:right" :disabled="money< upgrade.cost || bugs < upgrade.unlock" v-if="!upgrade.bought" @click="buy(upgrade)">
-                                <i className="fa fa-shopping-cart"></i> {{ displayCosts(upgrade.cost)}}
+                            <button class="btn btn-success btn-sm" style="float:right" :disabled="canNotAffordUpgrade(upgrade)" @click="buy(upgrade)">
+                                <i className="fa fa-shopping-cart"></i><i>&nbsp;{{displayCosts(upgrade.cost)}}</i>
                             </button>
                         </div>
                     </div>
@@ -38,7 +38,13 @@ export default {
     methods: { 
         buy(upgrade) {
             upgrade.bought = true;
-
+            upgrade.cost.forEach((value, index) => {
+                if (index % 2 === 0) {
+                    const cost = value;
+                    const resourceType = upgrade.cost[index + 1];
+                    this.$parent.resources[resourceType].value -= cost;
+                }
+            });
             upgrade.executes.forEach(({ funcName, args }) => {
                 if (typeof this[funcName] === 'function')
                     this[funcName](...args);
@@ -46,19 +52,33 @@ export default {
                     console.error(`Function ${funcName} not found.`);
             });
         },
+        canNotAffordUpgrade(upgrade){
+            return upgrade.cost.some((value, index) => {
+                if (index % 2 === 0) {
+                    const cost = value;
+                    const resourceType = upgrade.cost[index + 1];
+                    return this.$parent.resources[resourceType].value < cost;
+                }
+            });
+        },
+        displayCosts(cost) {
+            const formattedCosts = [];
+            for (let index = 0; index < cost.length; index += 2) {
+                const value = cost[index];
+                const resourceType = cost[index + 1];
+                formattedCosts.push(`${value} ${resourceType}`);
+            }
+            return formattedCosts.join(' / ');
+        },
         increaseProduction(resourceType, amount, factoryName) {
             console.log(`Increasing production of ${resourceType} by ${amount}% for ${factoryName}.`);
             var factories = this.$parent.factories;
             var factory = factories.find(factory => factory.name === factoryName);
             var product = factory.production.find(product => product.type === resourceType);
             const increase = product.rate * (amount / 100);
-            product.rate += increase;
-            this.$parent.resources[resourceType].rate += increase;
+            product.rate += increase; //increase the factory output
+            this.$parent.resources[resourceType].rate += increase; //increase the resource output
 
-        },
-        displayCosts(cost) {
-            const [price, resourceType] = cost;
-            return price + " " + this.$parent.resources[resourceType].name;
         },
         checkForUpgrades() {
             this.upgrades.forEach(upgrade => { 

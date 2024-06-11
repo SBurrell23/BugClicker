@@ -69,7 +69,8 @@
         "costs": [
             {
                 "type": "queenTermites",
-                "startingCost": 1
+                "startingCost": 1,
+                "geometricProgression": 1.4
             },
             {
                 "type": "bugs",

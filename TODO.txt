@@ -12,12 +12,12 @@ added geometric progression to factories to mimic cookie clicker rates
 
 Add unlock function loop that unlocks factories at their appropriate time
 
------DONE---
-
 get shop working so that you can spend resource to buy 1 time upgrades
 upgrades will modify the way a factory works and permenantly effect its stats
 
 adjust shop to refactor upgrades into their own .json File 
+
+-----DONE---
 
 save factories and resource to local storage and check and load on startup to save progress
 
