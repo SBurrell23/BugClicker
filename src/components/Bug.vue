@@ -29,11 +29,11 @@
                                     <b>{{factory.level}}</b> - {{factory.name}}
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">
-                                        {{resources[factory.produces].workText}} <b>{{factory.rate}}</b> <span :style="'color:'+resources[factory.produces].color"><b>{{producesName(factory.produces)}}</b></span> /s
+                                    <p class="card-text" v-for="(product, pIndex) in factory.production" :key="'product-' + pIndex">
+                                        {{resources[product.type].workText}} <b>{{product.rate}}</b> <span :style="'color:'+resources[product.type].color"><b>{{producesName(product.type)}}</b></span> /s
                                     </p>
-                                    <button class="btn btn-primary btn-sm" @click="upgradeFactory(index)" :disabled="resources[factory.costType].value < factory.cost">
-                                        {{ factory.buyText }} &nbsp;<i>({{factory.cost}} {{producesName(factory.costType)}})</i>
+                                    <button class="btn btn-primary btn-sm" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
+                                        {{ factory.buyText }} &nbsp;<i>({{ showCosts(factory.costs) }})</i>
                                     </button>
                                 </div>
                             </div>
@@ -85,16 +85,33 @@ export default {
         },
         upgradeFactory(index) {
             var factory = this.factories[index];
-            this.resources[factory.costType].value -= factory.cost; //Pay the cost
-            this.resources[factory.produces].rate += factory.rateIncrement; //Increase the resource rate
-            factory.level += 1;
-            factory.rate =  this.roundToTwoDecimals(factory.rate + factory.rateIncrement);
-            factory.cost += factory.costIncrement;
-            if(this.resources[factory.produces].unlocked == false) //If this is the first factory to producee this resource, unlock it
-                this.resources[factory.produces].unlocked = true;
+            factory.level++;
+
+            // Deduct cost and increment cost
+            factory.costs.forEach(cost => {
+                this.resources[cost.type].value -= cost.amount;
+                cost.amount += cost.increment;
+            });
+
+            // Update production rates and increment rates
+            factory.production.forEach(product => {
+                this.resources[product.type].rate += product.increment;
+                product.rate = this.roundToTwoDecimals(product.rate + product.increment);
+
+                // Also check and unlock the resource if it's the first factory to produce this resource
+                if (!this.resources[product.type].unlocked)
+                    this.resources[product.type].unlocked = true;
+            });
+
         },
         producesName(produces){
             return this.resources[produces].name;
+        },
+        isUpgradeDisabled(factory) {
+            return factory.costs.some(cost => this.resources[cost.type].value < cost.amount);
+        },
+        showCosts(costs) {
+            return costs.map(cost => `${cost.amount} ${this.producesName(cost.type)}`).join(', ');
         },
         roundToTwoDecimals(num) {
             return Math.round(num * 100) / 100;
