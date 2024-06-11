@@ -3,20 +3,32 @@
         "name": "Good Workers",
         "bought": false,
         "shown": false,
-        "cost": [10,"bugs"],
-        "unlockAt": [25,"bugs"],
+        "cost": [100,"bugs"],
+        "unlockAt": [40,"bugs"],
         "executes" : [{
             "funcName": "increaseProduction",
             "args": ["bugs", 100 , "Worker Ants"]
         }],
-        "description": "Worker Ants collect bugs 100% faster"
+        "description": "Worker Ants collection rate is doubled"
     },
     {
         "name": "Great Workers",
         "bought": false,
         "shown": false,
-        "cost": [10,"bugs", 100,"dirt"],
-        "unlockAt": [25,"bugs"],
+        "cost": [500,"bugs", 500,"dirt"],
+        "unlockAt": [150,"dirt"],
+        "executes" : [{
+            "funcName": "increaseProduction",
+            "args": ["bugs", 100 , "Worker Ants"]
+        }],
+        "description": "Worker Ants collection rate is doubled."
+    },
+    {
+        "name": "Really Hard Workers",
+        "bought": false,
+        "shown": false,
+        "cost": [1000,"bugs"],
+        "unlockAt": [50,"eggs"],
         "executes" : [{
             "funcName": "increaseProduction",
             "args": ["bugs", 100 , "Worker Ants"]

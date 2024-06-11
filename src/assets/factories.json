@@ -15,7 +15,7 @@
             }
         ],
         "buyText": "Recruit Workers",
-        "unlockAt": [5, "bugs"]
+        "unlockAt": [10, "bugs"]
     },
     {
         "name": "Builder Ants",
@@ -23,7 +23,7 @@
         "production": [
             {
                 "type": "dirt",
-                "increment": 2000000
+                "increment": 2
             }
         ],
         "costs": [
@@ -78,6 +78,6 @@
             }
         ],
         "buyText": "Build Nest",
-        "unlockAt": [0.01,"queenTermites"]
+        "unlockAt": [0.05,"queenTermites"]
     }
 ]

@@ -4,7 +4,7 @@
 
             <div class="mb-2"><h1>Bugs </h1></div>
             <div class="mb-3"><h1 :style="'color:'+resources.bugs.color"> {{resources.bugs.value}} </h1></div>
-            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',10000000)">Collect Bug</button>
+            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',1)">Collect Bug</button>
             
             <h4 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
             <ul class="list-group mb-4">
@@ -23,6 +23,9 @@
             <div class="unselectable">
                 <h4>Collectors</h4>
                 <hr>
+                <div class="mt-4" v-if="!factories[0].unlocked">
+                    <p>Get some bugs to earn your first collector!</p>
+                </div>
                 <div class="mt-2">
                     <div class="row">
 
@@ -77,7 +80,7 @@ export default {
     },
     data() {
         return {
-            interval: null,
+            timeout: null,
             startTime: 0,
             second: 0,
             resources:{},
@@ -173,33 +176,30 @@ export default {
                     resource.unlocked = false;
                 }
             }
+        },
+        gameLoop(){
+            this.second += 100; //Used to track seconds
+            this.collectResources();
+            if(this.second >= 500){
+                this.checkForUnlocks();
+                this.updatePageTitle();
+                this.second = 0;
+            }
+            this.timeout = setTimeout(this.gameLoop, 100);
         }
     },
     mounted() {
         this.resources = resources;
         this.factories = factories;
         this.upgrades = upgrades;
-
         this.setupResources();
 
         this.startTime = new Date().getTime();
-
-        this.interval = setInterval(() => {
-            this.second += 100; //Used to track seconds
-
-            this.collectResources();
-
-            if(this.second >= 1000){
-                this.checkForUnlocks();
-                this.updatePageTitle();
-                this.second = 0;
-            }
-
-        }, 100);
+        this.gameLoop();
 
     },
     unmount() {
-        clearInterval(this.interval);
+        clearTimeout(this.timeout);
     }
 };
 

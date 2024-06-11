@@ -2,6 +2,9 @@
     <div>
         <h4>Shop</h4>
         <hr>
+        <div class="mt-4" v-if="!upgrades[0].shown && !upgrades[0].bought">
+            <p>No upgrades available.</p>
+        </div>
         <span v-for="(upgrade,index) in upgrades" :key="index">
             <div class="card mb-2" v-if="upgrade.shown && !upgrade.bought">
                 <div class="card-body" >
@@ -90,18 +93,12 @@ export default {
             });
             this.timeout = setTimeout(this.checkForUpgrades, 1000);
         },
-        startLoop() {
-            this.checkForUpgrades();
-        },
-        endLoop() {
-            clearTimeout(this.timeout);
-        }
     },
     mounted() {
-        this.startLoop();
+        this.checkForUpgrades();
     },
     unmounted() {
-        this.endLoop();
+        clearTimeout(this.timeout);
     }
 }
 </script>
