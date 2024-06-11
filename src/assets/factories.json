@@ -5,20 +5,17 @@
         "production": [
             {
                 "type": "bugs",
-                "rate": 0,
                 "increment": 1
             }
         ],
         "costs": [
             {
                 "type": "bugs",
-                "startsAt": 10,
-                "amount": 10
+                "startingCost": 10
             }
         ],
         "buyText": "Recruit Workers",
-        "unlockAt": [0, "bugs"],
-        "unlocked": true
+        "unlockAt": [5, "bugs"]
     },
     {
         "name": "Builder Ants",
@@ -26,20 +23,17 @@
         "production": [
             {
                 "type": "dirt",
-                "rate": 0,
                 "increment": 2
             }
         ],
         "costs": [
             {
                 "type": "bugs",
-                "startsAt": 50,
-                "amount": 50
+                "startingCost": 50
             }
         ],
         "buyText": "Hire Builders",
-        "unlockAt": [25, "bugs"],
-        "unlocked": false
+        "unlockAt": [25, "bugs"]
     },
     {
         "name": "Termite Mound",
@@ -47,20 +41,17 @@
         "production": [
             {
                 "type": "queenTermite",
-                "rate": 0,
                 "increment": 0.01
             }
         ],
         "costs": [
             {
                 "type": "dirt",
-                "startsAt": 500,
-                "amount": 500
+                "startingCost": 500
             }
         ],
         "buyText": "Build Mound",
-        "unlockAt": [50, "dirt"],
-        "unlocked": false
+        "unlockAt": [50, "dirt"]
     },
     {
         "name": "Queen Termite Nest",
@@ -68,29 +59,24 @@
         "production": [
             {
                 "type": "eggs",
-                "rate": 0,
-                "increment": 3
+                "increment": 1
             },
             {
                 "type": "bugs",
-                "rate": 0,
-                "increment": 5
+                "increment": 3 
             }
         ],
         "costs": [
             {
                 "type": "queenTermite",
-                "startsAt": 1,
-                "amount": 1
+                "startingCost": 1
             },
             {
                 "type": "bugs",
-                "startsAt": 1000,
-                "amount": 1000
+                "startingCost": 1000
             }
         ],
         "buyText": "Build Nest",
-        "unlockAt": [0.01,"queenTermite"],
-        "unlocked": false
+        "unlockAt": [0.01,"queenTermite"]
     }
 ]

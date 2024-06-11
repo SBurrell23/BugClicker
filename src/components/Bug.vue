@@ -4,7 +4,7 @@
 
             <div class="mb-2"><h1>Bugs </h1></div>
             <div class="mb-3"><h1 :style="'color:'+resources.bugs.color"> {{resources.bugs.value}} </h1></div>
-            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',500)">Collect Bug</button>
+            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',1000000000)">Collect Bug</button>
             
             <h4 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
             <ul class="list-group mb-4">
@@ -13,7 +13,7 @@
                         <b>{{ resource.name }}</b>
                     </span>
                     <span :style="'color:'+resource.color">
-                        <b>{{ resource.value }}</b>
+                        <b>{{resource.value }}</b>
                     </span>
                 </li>
             </ul>
@@ -33,7 +33,9 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text  mb-2" v-for="(product, pIndex) in factory.production" :key="'product-' + pIndex">
-                                        {{resources[product.type].workText}} <b>{{product.rate}}</b> <span :style="'color:'+resources[product.type].color"><b>{{producesName(product.type)}}</b></span> /s
+                                        {{resources[product.type].workText}} 
+                                        <b v-if="product.rate">{{product.rate}}</b><b v-else>0</b>
+                                        <span :style="'color:'+resources[product.type].color"><b>&nbsp;{{producesName(product.type)}}</b></span> /s
                                     </p>
                                     <button class="btn btn-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
                                         {{ factory.buyText }} &nbsp;<i>({{ showCosts(factory.costs) }})</i>
@@ -93,12 +95,16 @@ export default {
 
             // Deduct cost and increment cost
             factory.costs.forEach(cost => {
-                this.resources[cost.type].value -= cost.amount;
-                cost.amount = Math.ceil(cost.startsAt * Math.pow(this.geometricProgression, factory.level));
+                if(!cost.currentCost) //currentCost is not set until a factory is lvl 1
+                    cost.currentCost = cost.startingCost;
+                this.resources[cost.type].value -= cost.currentCost;
+                cost.currentCost = Math.ceil(cost.startingCost * Math.pow(this.geometricProgression, factory.level));
             });
 
             // Update production rates and increment rates
             factory.production.forEach(product => {
+                if(!product.rate) //Rate is not set until a factory is lvl 1
+                    product.rate = 0;
                 this.resources[product.type].rate += product.increment;
                 product.rate = this.roundToTwoDecimals(product.rate + product.increment);
 
@@ -112,10 +118,6 @@ export default {
             this.factories.forEach(factory => {
                 if (factory.unlocked) 
                     return;
-                if(factory.name == "Queen Termite Nest"){
-                    console.log(this.resources[factory.unlockAt[1]].value);
-                    console.log(factory.unlockAt[0]);
-                }
                 if(
                     this.resources[factory.unlockAt[1]].value >= factory.unlockAt[0] || 
                     this.resources[factory.unlockAt[1]].accumulator >= factory.unlockAt[0]
@@ -127,11 +129,15 @@ export default {
             return this.resources[produces].name;
         },
         isUpgradeDisabled(factory) {
-            return factory.costs.some(cost => this.resources[cost.type].value < cost.amount);
+            return factory.costs.some(cost => {
+                if (cost.currentCost == undefined && this.resources[cost.type].value < cost.startingCost) 
+                    return true;
+                return this.resources[cost.type].value < cost.currentCost;
+            });
         },
         showCosts(costs) {
             return costs.map(cost => 
-                `${cost.amount === null ? cost.startsAt : cost.amount} ${this.producesName(cost.type)}`
+                `${cost.currentCost == undefined ? cost.startingCost : cost.currentCost} ${this.producesName(cost.type)}`
             ).join(', ');
         },
         roundToTwoDecimals(num) {
@@ -155,11 +161,26 @@ export default {
                     res.accumulator -= wholeResources;
                 }
             }
+        },
+        setupResources(){
+            //This function sets default keys for all the currently still locked resources
+            //This reduces clutter in the resources.json file
+            for (const key in this.resources) {
+                const resource = this.resources[key];
+                if (resource.unlocked == undefined) {
+                    resource.value = 0;
+                    resource.rate = 0;
+                    resource.accumulator = 0;
+                    resource.unlocked = false;
+                }
+            }
         }
     },
     mounted() {
         this.resources = resources;
         this.factories = factories;
+
+        this.setupResources();
 
         this.startTime = new Date().getTime();
 
