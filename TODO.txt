@@ -8,7 +8,11 @@ Make factories able to COST multiple resources e.g. turn these into arrays:
 "costIncrement": 5,
 "costType": "bugs",
 
+added geometric progression to factories to mimic cookie clicker rates
+
 Add unlock function loop that unlocks factories at their appropriate time
+
+-----DONE---
 
 get shop working so that you can spend resource to buy 1 time upgrades
 upgrades will modify the way a factory works and permenantly effect its stats

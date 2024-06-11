@@ -12,9 +12,8 @@
         "costs": [
             {
                 "type": "bugs",
-                "amount": 10,
-                "increment": 5
-                
+                "startsAt": 10,
+                "amount": 10
             }
         ],
         "buyText": "Recruit Workers",
@@ -28,19 +27,19 @@
             {
                 "type": "dirt",
                 "rate": 0,
-                "increment": 50
+                "increment": 2
             }
         ],
         "costs": [
             {
                 "type": "bugs",
-                "amount": 20,
-                "increment": 10
+                "startsAt": 50,
+                "amount": 50
             }
         ],
         "buyText": "Hire Builders",
-        "unlockAt": [0, "bugs"],
-        "unlocked": true
+        "unlockAt": [25, "bugs"],
+        "unlocked": false
     },
     {
         "name": "Termite Mound",
@@ -55,13 +54,13 @@
         "costs": [
             {
                 "type": "dirt",
-                "amount": 100,
-                "increment": 100
+                "startsAt": 500,
+                "amount": 500
             }
         ],
         "buyText": "Build Mound",
-        "unlockAt": [0, "bugs"],
-        "unlocked": true
+        "unlockAt": [50, "dirt"],
+        "unlocked": false
     },
     {
         "name": "Queen Termite Nest",
@@ -81,17 +80,17 @@
         "costs": [
             {
                 "type": "queenTermite",
-                "amount": 1,
-                "increment": 3
+                "startsAt": 1,
+                "amount": 1
             },
             {
                 "type": "bugs",
-                "amount": 100,
-                "increment": 100
+                "startsAt": 1000,
+                "amount": 1000
             }
         ],
         "buyText": "Build Nest",
-        "unlockAt": [0,"bugs"],
-        "unlocked": true
+        "unlockAt": [0.01,"queenTermite"],
+        "unlocked": false
     }
 ]
