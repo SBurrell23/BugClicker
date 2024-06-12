@@ -24,11 +24,20 @@
         <div class="col-lg-9">
             <nav class="nav nav-tabs d-flex justify-content-between mb-4">
                 <div class="d-flex">
-                    <a class="nav-link" :class="{'active': tab=='collectors'}" @click="switchTabs('collectors')">
+                    <a class="nav-link bigger-link" :class="{'active': tab=='collectors'}" @click="switchTabs('collectors')">
                         <i className="fa fa-bugs"></i> Collectors
                     </a>
+                    <a class="nav-link disabled">
+                        <i className="fa fa-egg"></i> Hatchery
+                    </a>
+                    <a class="nav-link disabled">
+                        <i className="fa fa-flask-vial"></i> Butterfly Pavillion
+                    </a>
+                    <a class="nav-link disabled">
+                        <i className="fa fa-refresh"></i> Exchange
+                    </a>
                 </div>
-                <a class="nav-link" :class="{'active': tab=='shop'}" @click="switchTabs('shop')">
+                <a class="nav-link bigger-link" :class="{'active': tab=='shop'}" @click="switchTabs('shop')">
                     <i className="fa fa-shopping-cart"></i> Shop  &nbsp;<span class="badge rounded-pill bg-success" v-if="this.numShopUpgrades != 0">{{this.numShopUpgrades}}</span>
                 </a>
             </nav>
@@ -291,7 +300,12 @@ export default {
 }
 @media (min-width: 850px) {
     .nav-link{
-        min-width: 220px;
+        min-width: 180px;
+    }
+}
+@media (min-width: 850px) {
+    .bigger-link{
+        min-width: 210px;
     }
 }
 </style>

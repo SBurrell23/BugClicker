@@ -42,5 +42,15 @@
         "name": "Wax",
         "color": "#b3af32",
         "workText": "Extracting"
+    },
+    "bees":{
+        "name": "Bees",
+        "color": "#e9cc00",
+        "workText": "Dancing"
+    },
+    "nectar":{
+        "name": "Nectar",
+        "color": "#ff38a2",
+        "workText": "Attracting"
     }
 }

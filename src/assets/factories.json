@@ -157,7 +157,7 @@
                 "increment": 2
             },
             {
-                "type": "bugs",
+                "type": "dirt",
                 "increment": 5
             }
         ],
@@ -172,10 +172,62 @@
             },
             {
                 "type": "mud",
-                "startingCost": 50
+                "startingCost": 500
             }
         ],
         "buyText": "Mold Den",
         "unlockAt": [100,"mud"]
+    },
+    {
+        "name": "Beehive",
+        "level": 0,
+        "production": [
+            {
+                "type": "bees",
+                "increment": 2
+            },
+            {
+                "type": "eggs",
+                "increment": 1
+            },
+            {
+                "type": "bugs",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "wax",
+                "startingCost": 500
+            },
+            {
+                "type": "mud",
+                "startingCost": 500
+            }
+        ],
+        "buyText": "Construct Hive",
+        "unlockAt": [100,"wax"]
+    },
+    {
+        "name": "Flower Field",
+        "level": 0,
+        "production": [
+            {
+                "type": "nectar",
+                "increment": 100
+            }
+        ],
+        "costs": [
+            {
+                "type": "bees",
+                "startingCost": 500
+            },
+            {
+                "type": "leaves",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Plant Field",
+        "unlockAt": [100,"bees"]
     }
 ]
