@@ -3,7 +3,7 @@
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div className="container">
                 <a className="navbar-brand" href="/">
-                <i className="fa fa-bugs"></i>
+                <i className="fa fa-bug"></i>
                     &nbsp;Bug Clicker
                 </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

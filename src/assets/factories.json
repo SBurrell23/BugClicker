@@ -79,5 +79,103 @@
         ],
         "buyText": "Build Nest",
         "unlockAt": [0.05,"queenTermites"]
+    },
+    {
+        "name": "Water Striders",
+        "level": 0,
+        "production": [
+            {
+                "type": "water",
+                "increment": 3
+            }
+        ],
+        "costs": [
+            {
+                "type": "eggs",
+                "startingCost": 25,
+                "geometricProgression": 1.25
+            },
+            {
+                "type": "bugs",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Mobilize Striders",
+        "unlockAt": [25,"eggs"]
+    },
+    {
+        "name": "Grasshoppers",
+        "level": 0,
+        "production": [
+            {
+                "type": "leaves",
+                "increment": 3
+            }
+        ],
+        "costs": [
+            {
+                "type": "eggs",
+                "startingCost": 25,
+                "geometricProgression": 1.25
+            },
+            {
+                "type": "bugs",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Recruit Hoppers",
+        "unlockAt": [25,"eggs"]
+    },
+    {
+        "name": "Dung Beetle Farm",
+        "level": 0,
+        "production": [
+            {
+                "type": "mud",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "water",
+                "startingCost": 200
+            },
+            {
+                "type": "dirt",
+                "startingCost": 200
+            }
+        ],
+        "buyText": "Build Farm",
+        "unlockAt": [100,"water"]
+    },
+    {
+        "name": "Earwig Den",
+        "level": 0,
+        "production": [
+            {
+                "type": "wax",
+                "increment": 2
+            },
+            {
+                "type": "bugs",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "water",
+                "startingCost": 200
+            },
+            {
+                "type": "leaves",
+                "startingCost": 200
+            },
+            {
+                "type": "mud",
+                "startingCost": 50
+            }
+        ],
+        "buyText": "Mold Den",
+        "unlockAt": [100,"mud"]
     }
 ]

@@ -1,12 +1,13 @@
 <template>
     <div class="row" v-if="resources.bugs">
-        <div class="col-lg-2" style="text-align: center;">
+        <div class="col-lg-3" style="text-align: center;">
 
             <div class="mb-2"><h1>Bugs </h1></div>
             <div class="mb-3"><h1 :style="'color:'+resources.bugs.color"> {{resources.bugs.value}} </h1></div>
-            <button class="btn btn-primary btn-sm" @click="collectResource('bugs',1)">Collect Bug</button>
+            <button class="btn btn-primary btn-sm mb-3 me-2" @click="collectResource('bugs',100000000)">Collect Bug</button>
+            <button class="btn btn-danger btn-sm mb-3" @click="wipeSave()">Wipe Save</button>
             
-            <h4 class="mt-5 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
+            <h4 class="mt-4 mb-3" v-if="Object.keys(filteredResources).length > 0">Resources<hr></h4>
             <ul class="list-group mb-4">
                 <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(resource, index) in filteredResources" :key="index">
                     <span :style="'color:'+resource.color">
@@ -19,41 +20,52 @@
             </ul>
 
         </div>
-        <div class="col-lg-8"> 
-            <div class="unselectable">
-                <h4>Collectors</h4>
-                <hr>
-                <div class="mt-4" v-if="!factories[0].unlocked">
-                    <p>Get some bugs to earn your first collector!</p>
+        
+        <div class="col-lg-9">
+            <nav class="nav nav-tabs d-flex justify-content-between mb-4">
+                <div class="d-flex">
+                    <a class="nav-link" :class="{'active': tab=='collectors'}" @click="switchTabs('collectors')">
+                        <i className="fa fa-bugs"></i> Collectors
+                    </a>
                 </div>
-                <div class="mt-2">
-                    <div class="row">
+                <a class="nav-link" :class="{'active': tab=='shop'}" @click="switchTabs('shop')">
+                    <i className="fa fa-shopping-cart"></i> Shop  &nbsp;<span class="badge rounded-pill bg-success" v-if="this.numShopUpgrades != 0">{{this.numShopUpgrades}}</span>
+                </a>
+            </nav>
 
-                        <div class="col-sm-4 mb-2" v-for="(factory,index) in factories" :key="index" v-show="factory.unlocked">
-                            <div class="card mb-2">
-                                <div class="card-header">
-                                    <b>{{factory.level}}</b> - {{factory.name}}
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text  mb-2" v-for="(product, pIndex) in factory.production" :key="'product-' + pIndex">
-                                        {{resources[product.type].workText}} 
-                                        <b v-if="product.rate">{{product.rate}}</b><b v-else>0</b>
-                                        <span :style="'color:'+resources[product.type].color"><b>&nbsp;{{producesName(product.type)}}</b></span> /s
-                                    </p>
-                                    <button class="btn btn-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
-                                        {{ factory.buyText }} &nbsp;<i> - {{ showCosts(factory.costs) }}</i>
-                                    </button>
+            <div v-show="tab == 'collectors'"> 
+                <div class="unselectable">
+                    <div class="mt-4" v-if="!factories[0].unlocked">
+                        <p>Get some bugs to earn your first collector!</p>
+                    </div>
+                    <div class="mt-2">
+                        <div class="row">
+
+                            <div class="col-sm-4 mb-2" v-for="(factory,index) in factories" :key="index" v-show="factory.unlocked">
+                                <div class="card mb-2">
+                                    <div class="card-header">
+                                        <b>{{factory.level}}</b> - {{factory.name}}
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text  mb-2" v-for="(product, pIndex) in factory.production" :key="'product-' + pIndex">
+                                            {{resources[product.type].workText}} 
+                                            <b v-if="product.rate">{{product.rate}}</b><b v-else>0</b>
+                                            <span :style="'color:'+resources[product.type].color"><b>&nbsp;{{producesName(product.type)}}</b></span> /s
+                                        </p>
+                                        <button class="btn btn-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
+                                            {{ factory.buyText }}<i> - {{ showCosts(factory.costs) }}</i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-        <div class="col-lg-2">
-            <Shop ref="shop" :upgrades="upgrades"/>
+            <div v-show="tab == 'shop'">
+                <Shop ref="shop" :upgrades="upgrades"/>
+            </div>
         </div>
     </div>
 </template>
@@ -82,7 +94,9 @@ export default {
         return {
             timeout: null,
             startTime: 0,
-            second: 0,
+            seconds: 0,
+            tab:"collectors",
+            numShopUpgrades: 0,
             resources:{},
             factories:[],
             upgrades:[],
@@ -97,7 +111,7 @@ export default {
             var factory = this.factories[index];
             factory.level++;
 
-            // Deduct cost and increment cost
+            // Deduct cost and increase cost based on GP
             factory.costs.forEach(cost => {
                 if(!cost.currentCost) //currentCost is not set until a factory is lvl 1
                     cost.currentCost = cost.startingCost;
@@ -140,6 +154,9 @@ export default {
                 return this.resources[cost.type].value < cost.currentCost;
             });
         },
+        switchTabs(tab){
+            this.tab = tab;
+        },
         showCosts(costs) {
             return costs.map(cost => 
                 `${cost.currentCost == undefined ? cost.startingCost : cost.currentCost} ${this.producesName(cost.type)}`
@@ -150,6 +167,10 @@ export default {
         },
         updatePageTitle() {
             document.title = "Bug Clicker - " + this.resources.bugs.value.toFixed(0);
+        },
+        checkShopForUpgrades(){
+            if(this.$refs.shop)
+                this.numShopUpgrades = this.$refs.shop.numberOfAvailableUpgrades();
         },
         collectResources(){
             for (const key in this.resources) {
@@ -177,14 +198,55 @@ export default {
                 }
             }
         },
-        gameLoop(){
-            this.second += 100; //Used to track seconds
-            this.collectResources();
-            if(this.second >= 500){
-                this.checkForUnlocks();
-                this.updatePageTitle();
-                this.second = 0;
+        saveData(){
+            const data = {
+                resources: this.resources,
+                factories: this.factories,
+                upgrades: this.upgrades
+            };
+            localStorage.setItem('gameData', JSON.stringify(data));
+        },
+        loadData(){
+            const data = JSON.parse(localStorage.getItem('gameData'));
+            if (data) {
+                for (const key in data.resources) {
+                    if (key !== 'name' && key !== 'color' && key !== 'workText') {
+                        this.resources[key] = data.resources[key];
+                    }
+                }
+                if (data.factories) {
+                    data.factories.forEach(factory => {
+                        const existingFactory = this.factories.find(f => f.name === factory.name);
+                        if (existingFactory) {
+                            existingFactory.level = factory.level;
+                            existingFactory.unlocked = factory.unlocked;
+                            existingFactory.production = factory.production;
+                            existingFactory.buyText = factory.buyText;
+                            existingFactory.costs = factory.costs;
+                        } else {
+                            this.factories.push(factory);
+                        }
+                    });
+                }
+                this.upgrades = data.upgrades;
             }
+        },
+        wipeSave(){
+            localStorage.removeItem('gameData');
+            location.reload();
+        },
+        gameLoop(){
+            this.collectResources();
+            if(this.seconds % 500 == 0){
+                this.checkForUnlocks();
+                this.checkShopForUpgrades();
+            }
+            if(this.seconds % 1000 == 0)
+                this.updatePageTitle();
+            if(this.seconds % 3000 == 0)
+                this.saveData();
+            
+            this.seconds += 100; //Used to track seconds
             this.timeout = setTimeout(this.gameLoop, 100);
         }
     },
@@ -192,6 +254,7 @@ export default {
         this.resources = resources;
         this.factories = factories;
         this.upgrades = upgrades;
+        this.loadData();
         this.setupResources();
 
         this.startTime = new Date().getTime();
@@ -221,5 +284,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.nav-link{
+    cursor: pointer;
+    text-align: center;
+}
+@media (min-width: 850px) {
+    .nav-link{
+        min-width: 220px;
+    }
 }
 </style>

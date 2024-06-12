@@ -7,9 +7,9 @@
         "unlockAt": [40,"bugs"],
         "executes" : [{
             "funcName": "increaseProduction",
-            "args": ["bugs", 100 , "Worker Ants"]
+            "args": ["bugs", 50 , "Worker Ants"]
         }],
-        "description": "Worker Ants collection rate is doubled"
+        "description": "Worker Ants collection rate increases by 50%"
     },
     {
         "name": "Great Workers",

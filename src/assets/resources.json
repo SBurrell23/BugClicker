@@ -10,7 +10,7 @@
     },
     "dirt":{
         "name": "Dirt",
-        "color": "#7a5218",
+        "color": "#a97730",
         "workText": "Gathering"
     },
     "queenTermites":{
@@ -22,5 +22,25 @@
         "name": "Eggs",
         "color": "#d5b775",
         "workText": "Laying"
+    },
+    "water":{
+        "name": "Water",
+        "color": "#3ebaf5",
+        "workText": "Harvesting"
+    },
+    "leaves":{
+        "name": "Leaves",
+        "color": "#29d92c",
+        "workText": "Cutting"
+    },
+    "mud":{
+        "name": "Mud",
+        "color": "#583f1c",
+        "workText": "Rolling"
+    },
+    "wax":{
+        "name": "Wax",
+        "color": "#b3af32",
+        "workText": "Extracting"
     }
 }

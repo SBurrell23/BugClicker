@@ -1,25 +1,27 @@
 <template>
     <div>
-        <h4>Shop</h4>
-        <hr>
-        <div class="mt-4" v-if="!upgrades[0].shown && !upgrades[0].bought">
-            <p>No upgrades available.</p>
+        <div class="mt-4" v-if="numberOfAvailableUpgrades() == 0">
+            <p> 
+                Find more bugs to unlock upgrades!
+            </p>
         </div>
-        <span v-for="(upgrade,index) in upgrades" :key="index">
-            <div class="card mb-2" v-if="upgrade.shown && !upgrade.bought">
-                <div class="card-body" >
-                    <h5 class="card-title"> {{ upgrade.name }}</h5>
-                    <p class="card-text">{{ upgrade.description }}</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" style="float:right" :disabled="canNotAffordUpgrade(upgrade)" @click="buy(upgrade)">
-                                <i className="fa fa-shopping-cart"></i><i>&nbsp;{{displayCosts(upgrade.cost)}}</i>
-                            </button>
+        <div class="row">
+            <div class="col-6" v-for="(upgrade,index) in filteredUpgrades" :key="index">
+                <div class="card mb-2">
+                    <div class="card-body" >
+                        <h5 class="card-title"> {{ upgrade.name }}</h5>
+                        <p class="card-text">{{ upgrade.description }}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-success btn-sm" style="float:right" :disabled="canNotAffordUpgrade(upgrade)" @click="buy(upgrade)">
+                                    <i className="fa fa-shopping-cart"></i><i>&nbsp;{{displayCosts(upgrade.cost)}}</i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </span>
+        </div>
     </div>
 </template>
 
@@ -36,6 +38,11 @@ export default {
     data() {
         return {
             timeout: null,
+        }
+    },
+    computed: {
+        filteredUpgrades() {
+            return this.upgrades.filter(upgrade => (upgrade.shown && !upgrade.bought));
         }
     },
     methods: { 
@@ -55,6 +62,21 @@ export default {
                     console.error(`Function ${funcName} not found.`);
             });
         },
+        increaseProduction(resourceType, amount, factoryName) {
+            console.log(`Increasing production of ${resourceType} by ${amount}% for ${factoryName}.`);
+            var factories = this.$parent.factories;
+            var factory = factories.find(factory => factory.name === factoryName);
+            var product = factory.production.find(product => product.type === resourceType);
+            const rateIncrease = product.rate * (amount / 100);
+            const incrementIncrease = product.increment * (amount / 100);
+            product.rate += rateIncrease; //increase the factories current output rate
+            product.increment += incrementIncrease // increase the future proudction rate increments
+            this.$parent.resources[resourceType].rate += rateIncrease; //increase the resource output
+
+        },
+        numberOfAvailableUpgrades() {
+            return this.upgrades.filter(upgrade => upgrade.shown && !upgrade.bought).length;
+        },
         canNotAffordUpgrade(upgrade){
             return upgrade.cost.some((value, index) => {
                 if (index % 2 === 0) {
@@ -71,17 +93,7 @@ export default {
                 const resourceType = cost[index + 1];
                 formattedCosts.push(`${value} ${resourceType}`);
             }
-            return formattedCosts.join(' / ');
-        },
-        increaseProduction(resourceType, amount, factoryName) {
-            console.log(`Increasing production of ${resourceType} by ${amount}% for ${factoryName}.`);
-            var factories = this.$parent.factories;
-            var factory = factories.find(factory => factory.name === factoryName);
-            var product = factory.production.find(product => product.type === resourceType);
-            const increase = product.rate * (amount / 100);
-            product.rate += increase; //increase the factory output
-            this.$parent.resources[resourceType].rate += increase; //increase the resource output
-
+            return formattedCosts.join(' + ');
         },
         checkForUpgrades() {
             this.upgrades.forEach(upgrade => { 
