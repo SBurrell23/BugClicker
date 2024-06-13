@@ -30,7 +30,7 @@
                     <a class="nav-link"  :class="{'active':tab=='hatchery','disabled':!isFactoryUnlocked('Queen Termite Nest')}" @click="switchTabs('hatchery')">
                         <i className="fa fa-egg"></i> Hatchery
                     </a>
-                    <a class="nav-link" :class="{'active':tab=='butterflypavillion','disabled':!isFactoryUnlocked('Flower Field')}" @click="switchTabs('butterflypavillion')">
+                    <a class="nav-link" :class="{'active':tab=='pavillion','disabled':!isFactoryUnlocked('Flower Field')}" @click="switchTabs('pavillion')">
                         <i className="fa fa-flask-vial"></i> Pavillion
                     </a>
                     <a class="nav-link disabled">
@@ -78,6 +78,9 @@
             <div v-show="tab == 'hatchery'">
                 <Hatchery ref="hatchery"/>
             </div>
+            <div v-show="tab == 'pavillion'">
+                <Pavillion ref="pavillion"/>
+            </div>
             <div v-show="tab == 'shop'">
                 <Shop ref="shop" :upgrades="upgrades"/>
             </div>
@@ -91,11 +94,13 @@ import factories from '../assets/factories.json';
 import upgrades from '../assets/upgrades.json';
 import Shop from './Shop.vue';
 import Hatchery from './Hatchery.vue';
+import Pavillion from './Pavillion.vue';
 
 export default {
     components: {
         Shop,
-        Hatchery
+        Hatchery,
+        Pavillion
     },
     props: {},
     computed: {
