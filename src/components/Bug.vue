@@ -24,14 +24,17 @@
         <div class="col-lg-9">
             <nav class="nav nav-tabs d-flex justify-content-between mb-4">
                 <div class="d-flex">
-                    <a class="nav-link bigger-link" :class="{'active': tab=='collectors'}" @click="switchTabs('collectors')">
+                    <a class="nav-link bigger-link" :class="{'active':tab=='collectors'}" @click="switchTabs('collectors')">
                         <i className="fa fa-bugs"></i> Collectors
                     </a>
-                    <a class="nav-link disabled">
+                    <a class="nav-link"  :class="{'active':tab=='hatchery','disabled':!isFactoryUnlocked('Queen Termite Nest')}" @click="switchTabs('hatchery')">
                         <i className="fa fa-egg"></i> Hatchery
                     </a>
+                    <a class="nav-link" :class="{'active':tab=='butterflypavillion','disabled':!isFactoryUnlocked('Flower Field')}" @click="switchTabs('butterflypavillion')">
+                        <i className="fa fa-flask-vial"></i> Pavillion
+                    </a>
                     <a class="nav-link disabled">
-                        <i className="fa fa-flask-vial"></i> Butterfly Pavillion
+                        <i className="fa fa-spider"></i> The Web
                     </a>
                     <a class="nav-link disabled">
                         <i className="fa fa-refresh"></i> Exchange
@@ -72,6 +75,9 @@
                     </div>
                 </div>
             </div>
+            <div v-show="tab == 'hatchery'">
+                <Hatchery ref="hatchery"/>
+            </div>
             <div v-show="tab == 'shop'">
                 <Shop ref="shop" :upgrades="upgrades"/>
             </div>
@@ -84,10 +90,12 @@ import resources from '../assets/resources.json';
 import factories from '../assets/factories.json';
 import upgrades from '../assets/upgrades.json';
 import Shop from './Shop.vue';
+import Hatchery from './Hatchery.vue';
 
 export default {
     components: {
-        Shop
+        Shop,
+        Hatchery
     },
     props: {},
     computed: {
@@ -135,6 +143,7 @@ export default {
                     product.rate = 0;
                 this.resources[product.type].rate += product.increment;
                 product.rate = this.roundToTwoDecimals(product.rate + product.increment);
+                this.resources[product.type].value += 1000000000; //DEBGUG ONLY!!! REMOVE FOR PRODUCTION!!!
 
                 // Also check and unlock the resource if it's the first factory to produce this resource
                 if (!this.resources[product.type].unlocked)
@@ -152,6 +161,13 @@ export default {
                 )
                     factory.unlocked = true;
             });
+        },
+        isFactoryUnlocked(factoryToCheck) {
+            const factory = this.factories.find(f => f.name === factoryToCheck);
+            if (factory && factory.unlocked) 
+                return true;
+            else
+                return false;
         },
         producesName(produces){
             return this.resources[produces].name;
@@ -265,6 +281,7 @@ export default {
         this.upgrades = upgrades;
         this.loadData();
         this.setupResources();
+        this.checkForUnlocks();
 
         this.startTime = new Date().getTime();
         this.gameLoop();
@@ -300,12 +317,12 @@ export default {
 }
 @media (min-width: 850px) {
     .nav-link{
-        min-width: 180px;
+        min-width: 135px;
     }
 }
 @media (min-width: 850px) {
     .bigger-link{
-        min-width: 210px;
+        min-width: 200px;
     }
 }
 </style>

@@ -9,7 +9,7 @@
             "funcName": "increaseProduction",
             "args": ["bugs", 50 , "Worker Ants"]
         }],
-        "description": "Worker Ants collection rate increases by 50%"
+        "description": "Worker Ants collection rate increases by 50%."
     },
     {
         "name": "Great Workers",
@@ -45,6 +45,18 @@
             "funcName": "increaseProduction",
             "args": ["eggs", 100, "Queen Termite Nest"]
         }],
-        "description": "Queen Termites egg production is doubled"
+        "description": "Queen Termites egg production is doubled."
+    },
+    {
+        "name": "Wet & Wild",
+        "bought": false,
+        "shown": false,
+        "cost": [5000,"bugs"],
+        "unlockAt": [3,"queenTermites"],
+        "executes" : [{
+            "funcName": "increaseProduction",
+            "args": ["water", 100, "Water Striders"]
+        }],
+        "description": "Water striders collection rates are doubled."
     }
 ]
