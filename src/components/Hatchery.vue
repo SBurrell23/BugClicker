@@ -1,6 +1,26 @@
 <template>
     <div>
-        Welcome to the Hatchery!
+        <div class="row">
+
+            <div class="col-12" v-for="index in [1,2,3,4,5]">
+                <div class="card mb-2">
+                    <div class="card-body" >
+                        <h5 class="card-title">Incubator #{{ index }}</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                EGG
+                            </div>
+                            <div class="col-md-8">
+                                <button class="btn btn-outline-success btn-sm" style="float:right" @click="hatch()">
+                                    <i className="fa fa-circle-play"></i>&nbsp;Start Hatching
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
         <!--
 

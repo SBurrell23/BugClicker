@@ -64,8 +64,8 @@
                                             <b v-if="product.rate">{{product.rate}}</b><b v-else>0</b>
                                             <span :style="'color:'+resources[product.type].color"><b>&nbsp;{{producesName(product.type)}}</b></span> /s
                                         </p>
-                                        <button class="btn btn-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
-                                            {{ factory.buyText }}<i> - {{ showCosts(factory.costs) }}</i>
+                                        <button class="btn btn-outline-primary btn-sm mt-2" @click="upgradeFactory(index)" :disabled="isUpgradeDisabled(factory)">
+                                            {{ factory.buyText }}<i> -  {{ showCosts(factory.costs) }}</i>
                                         </button>
                                     </div>
                                 </div>
