@@ -33,7 +33,7 @@
                     <a class="nav-link" :class="{'active':tab=='pavillion','disabled':!isFactoryUnlocked('Flower Field')}" @click="switchTabs('pavillion')">
                         <i className="fa fa-flask-vial"></i> Pavillion
                     </a>
-                    <a class="nav-link disabled">
+                    <a class="nav-link":class="{'active':tab=='web'}" @click="switchTabs('web')">
                         <i className="fa fa-spider"></i> The Web
                     </a>
                     <a class="nav-link disabled">
@@ -81,6 +81,9 @@
             <div v-show="tab == 'pavillion'">
                 <Pavillion ref="pavillion"/>
             </div>
+            <div v-show="tab == 'web'">
+                <Web ref="web"/>
+            </div>
             <div v-show="tab == 'shop'">
                 <Shop ref="shop" :upgrades="upgrades"/>
             </div>
@@ -95,12 +98,14 @@ import upgrades from '../assets/upgrades.json';
 import Shop from './Shop.vue';
 import Hatchery from './Hatchery.vue';
 import Pavillion from './Pavillion.vue';
+import Web from './Web.vue';
 
 export default {
     components: {
         Shop,
         Hatchery,
-        Pavillion
+        Pavillion,
+        Web
     },
     props: {},
     computed: {
