@@ -11,7 +11,7 @@
                                 EGG - Cost x eggs/sec while hatching
                                 Hatch time = 1 hour
                                 Potential Products 1x [water or leaves or bugs] (spend flat EGGS to re-roll potential products)
-                                Potential Costs 1x [bugs]
+                                Potential Costs 1x [bugs] 
                             </div>
                             <div class="col-md-8">
                                 <button class="btn btn-outline-success btn-sm" style="float:right" @click="hatch()">
