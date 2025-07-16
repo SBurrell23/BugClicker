@@ -229,5 +229,233 @@
         ],
         "buyText": "Plant Field",
         "unlockAt": [100,"bees"]
+    },
+    {
+        "name": "Butterfly Garden",
+        "level": 0,
+        "production": [
+            {
+                "type": "butterflies",
+                "increment": 1
+            }
+        ],
+        "costs": [
+            {
+                "type": "nectar",
+                "startingCost": 1000
+            },
+            {
+                "type": "bees",
+                "startingCost": 200
+            }
+        ],
+        "buyText": "Plant Garden",
+        "unlockAt": [500,"nectar"]
+    },
+    {
+        "name": "Spider Nest",
+        "level": 0,
+        "production": [
+            {
+                "type": "spiders",
+                "increment": 0.5
+            }
+        ],
+        "costs": [
+            {
+                "type": "butterflies",
+                "startingCost": 50
+            },
+            {
+                "type": "dirt",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Weave Nest",
+        "unlockAt": [200,"butterflies"]
+    },
+    {
+        "name": "Silk Spinners",
+        "level": 0,
+        "production": [
+            {
+                "type": "silk",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "spiders",
+                "startingCost": 10
+            },
+            {
+                "type": "leaves",
+                "startingCost": 500
+            },
+            {
+                "type": "water",
+                "startingCost": 500
+            }
+        ],
+        "buyText": "Start Spinners",
+        "unlockAt": [20,"spiders"]
+    },
+    {
+        "name": "Firefly Swarm",
+        "level": 0,
+        "production": [
+            {
+                "type": "fireflies",
+                "increment": 2
+            }
+        ],
+        "costs": [
+            {
+                "type": "silk",
+                "startingCost": 100
+            },
+            {
+                "type": "nectar",
+                "startingCost": 2000
+            }
+        ],
+        "buyText": "Attract Swarm",
+        "unlockAt": [500,"silk"]
+    },
+    {
+        "name": "Glowworm Caves",
+        "level": 0,
+        "production": [
+            {
+                "type": "glowJuice",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "fireflies",
+                "startingCost": 50
+            },
+            {
+                "type": "mud",
+                "startingCost": 1000
+            },
+            {
+                "type": "water",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Dig Caves",
+        "unlockAt": [100,"fireflies"]
+    },
+    {
+        "name": "Mantis Dojo",
+        "level": 0,
+        "production": [
+            {
+                "type": "mantises",
+                "increment": 1
+            }
+        ],
+        "costs": [
+            {
+                "type": "glowJuice",
+                "startingCost": 200
+            },
+            {
+                "type": "eggs",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Train Mantises",
+        "unlockAt": [200,"glowJuice"]
+    },
+    {
+        "name": "Chitin Foundry",
+        "level": 0,
+        "production": [
+            {
+                "type": "chitin",
+                "increment": 5
+            }
+        ],
+        "costs": [
+            {
+                "type": "mantises",
+                "startingCost": 10
+            },
+            {
+                "type": "mud",
+                "startingCost": 2000
+            }
+        ],
+        "buyText": "Forge Chitin",
+        "unlockAt": [10,"mantises"]
+    },
+    {
+        "name": "Dragonfly Pond",
+        "level": 0,
+        "production": [
+            {
+                "type": "dragonflies",
+                "increment": 2
+            }
+        ],
+        "costs": [
+            {
+                "type": "water",
+                "startingCost": 5000
+            },
+            {
+                "type": "leaves",
+                "startingCost": 3000
+            }
+        ],
+        "buyText": "Build Pond",
+        "unlockAt": [1000,"chitin"]
+    },
+    {
+        "name": "Stinkbug Lab",
+        "level": 0,
+        "production": [
+            {
+                "type": "pheromones",
+                "increment": 1
+            }
+        ],
+        "costs": [
+            {
+                "type": "dragonflies",
+                "startingCost": 20
+            },
+            {
+                "type": "chitin",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Research Lab",
+        "unlockAt": [30,"dragonflies"]
+    },
+    {
+        "name": "Wasp Hive",
+        "level": 0,
+        "production": [
+            {
+                "type": "wasps",
+                "increment": 1
+            }
+        ],
+        "costs": [
+            {
+                "type": "pheromones",
+                "startingCost": 200
+            },
+            {
+                "type": "bees",
+                "startingCost": 1000
+            }
+        ],
+        "buyText": "Raise Wasps",
+        "unlockAt": [100,"pheromones"]
     }
 ]

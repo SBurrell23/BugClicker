@@ -52,5 +52,55 @@
         "name": "Nectar",
         "color": "#ff38a2",
         "workText": "Attracting"
+    },
+    "butterflies":{
+        "name": "Butterflies",
+        "color": "#f8a2ff",
+        "workText": "Fluttering"
+    },
+    "spiders":{
+        "name": "Spiders",
+        "color": "#2f2f2f",
+        "workText": "Spinning"
+    },
+    "silk":{
+        "name": "Silk",
+        "color": "#f0e6d6",
+        "workText": "Weaving"
+    },
+    "fireflies":{
+        "name": "Fireflies",
+        "color": "#e1ff00",
+        "workText": "Glowing"
+    },
+    "glowJuice":{
+        "name": "Glow Juice",
+        "color": "#00ffc8",
+        "workText": "Juicing"
+    },
+    "mantises":{
+        "name": "Mantises",
+        "color": "#5fb236",
+        "workText": "Training"
+    },
+    "chitin":{
+        "name": "Chitin",
+        "color": "#705a36",
+        "workText": "Hardening"
+    },
+    "dragonflies":{
+        "name": "Dragonflies",
+        "color": "#69c4ff",
+        "workText": "Soaring"
+    },
+    "pheromones":{
+        "name": "Pheromones",
+        "color": "#ff00e1",
+        "workText": "Synthesizing"
+    },
+    "wasps":{
+        "name": "Wasps",
+        "color": "#d99b2b",
+        "workText": "Stinging"
     }
 }
